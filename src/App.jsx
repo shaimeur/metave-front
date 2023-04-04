@@ -9,7 +9,6 @@ const App = () => {
   const dragEndHandler = (result) => {
     // TODO : reorder our column
     const { destination, source, draggableId } = result;
-    event.preventDefault();
     if (!destination) {
       return;
     }
@@ -20,7 +19,7 @@ const App = () => {
       return;
     }
 
-    const column = list.columns[source.draggableId];
+    const column = list.columns[source.droppableId];
 
     const newTaskIds = Array.from(column.taskIds);
     newTaskIds.splice(source.index, 1);
@@ -28,7 +27,7 @@ const App = () => {
 
     const newColumn = {
       ...column,
-      taskId: newTaskIds,
+      taskIds: newTaskIds,
     };
     const newState = {
       ...list,
