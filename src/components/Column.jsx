@@ -7,14 +7,20 @@ const Container = styled.div`
   margin: 8px;
   border: 1px solid lightgrey;
   border-radius: 2px;
+  width:50%;
+  max-width:700px;
 `;
 const Title = styled.h3`
   padding: 8px;
 `;
 
 const TaskList = styled.div`
-  padding: 8px;
+  padding: 12px 16px;
   transition: background-color 0.2s ease;
+  color:black;
+  font-size:1.7rem;
+  cursor:pointer;
+  user-select:none;
   background-color : ${props =>(props.isDraggingOver ? 'skyblue' : 'white')}
 `;
 

@@ -22,8 +22,17 @@ const Register = (props) => {
     console.log(event.target.value);
     setPassword(event.target.value);
   };
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
+    console.log("====> Submit called");
+    let registerResult = await fetch("http://localhost:3000/register",{
+      method:'POST',
+      headers:{ 'Content-Type': 'application/json' },
+      body:JSON.stringify({email,name,password})
+    });
+    registerResult = await registerResult.json();
+    props.setCurrentForm('login');
+    console.log('registerResult',registerResult);
   };
 
   return (

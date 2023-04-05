@@ -16,8 +16,23 @@ const Login = (props) => {
     console.log(event.target.value);
     setPassword(event.target.value);
   };
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
+    console.log("====> Submit called");
+    let registerResult = await fetch("http://localhost:3000/login",{
+      method:'POST',
+      headers:{ 'Content-Type': 'application/json' },
+      body:JSON.stringify({email,password})
+    });
+    registerResult = await registerResult.json();
+    if(registerResult.token){
+      localStorage.setItem('token',registerResult.token);
+      localStorage.setItem('user_email',registerResult.email);
+      props.isLoggedin(true);
+    }else{
+      console.log('registerResult',registerResult);
+      alert("Login invalid");
+    }
   };
 
   return (

@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import data from "../data";
 import Column from "./Column";
 
 const Kanban = () => {
   const [list, setList] = useState(data);
+  const [ready,setReady] = useState(false);
 
+
+  useEffect(()=>{
+    setTimeout(()=>{
+      setReady(true);
+    },0)
+  },[]);
   const dragEndHandler = (result) => {
     // TODO : reorder our column
     const { destination, source, draggableId } = result;
@@ -38,18 +45,18 @@ const Kanban = () => {
     };
     setList(newState);
   };
+
+
   return (
-    <DragDropContext onDragEnd={dragEndHandler}>
-        <div>
-
-      {list.columnOrder.map((columnId) => {
-        const column = list.columns[columnId];
-        const tasks = column.taskIds.map((taskId) => list.tasks[taskId]);
-        return <Column key={column.id} column={column} tasks={tasks} />;
-      })}
-
-      </div>
-    </DragDropContext>
+    <>
+      {ready && <DragDropContext onDragEnd={dragEndHandler}>
+          {list.columnOrder.map((columnId) => {
+            const column = list.columns[columnId];
+            const tasks = column.taskIds.map((taskId) => list.tasks[taskId]);
+            return <Column key={column.id} column={column} tasks={tasks} />;
+          })}
+      </DragDropContext>}
+    </>
   );
 };
 
