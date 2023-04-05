@@ -5,14 +5,9 @@ import Column from "./Column";
 
 const Kanban = () => {
   const [list, setList] = useState(data);
-  const [ready,setReady] = useState(false);
 
 
-  useEffect(()=>{
-    setTimeout(()=>{
-      setReady(true);
-    },0)
-  },[]);
+
   const dragEndHandler = (result) => {
     // TODO : reorder our column
     const { destination, source, draggableId } = result;
@@ -48,15 +43,18 @@ const Kanban = () => {
 
 
   return (
-    <>
-      {ready && <DragDropContext onDragEnd={dragEndHandler}>
+
+       <DragDropContext onDragEnd={dragEndHandler}>
+
+
           {list.columnOrder.map((columnId) => {
             const column = list.columns[columnId];
             const tasks = column.taskIds.map((taskId) => list.tasks[taskId]);
             return <Column key={column.id} column={column} tasks={tasks} />;
           })}
-      </DragDropContext>}
-    </>
+
+      </DragDropContext>
+
   );
 };
 
